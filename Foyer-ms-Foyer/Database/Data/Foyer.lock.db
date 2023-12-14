@@ -1,0 +1,6 @@
+#FileLock
+#Thu Dec 14 12:11:38 CET 2023
+server=192.168.1.133\:55611
+hostName=192.168.1.133
+method=file
+id=18c6806531c9c5bf57a1ab251bd9d44bc8fe8e3f080

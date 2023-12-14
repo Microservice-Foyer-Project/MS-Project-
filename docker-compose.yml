@@ -1,0 +1,172 @@
+version: "3.9"
+services:
+  
+    
+  Chambre:
+    container_name: chambre
+    image: "chambrems"
+    build: .\Chambre
+    ports:
+      - "8082:8082"   
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - "Eureka"
+
+
+  Foyer:
+    container_name: foyer
+    image: "foyerms"
+    build: .\Foyer-ms-Foyer
+    ports:
+      - "8096:8096"   
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    depends_on:
+      - "Eureka"    
+      
+  
+  Bloc:
+    container_name: bloc
+    build: .\Bloc
+    ports:
+      - "8084:8084"   
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/BlocTest?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/      
+      
+      
+    image: "blocms"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql
+
+
+  Evenement:
+    container_name: evenement
+    build: .\Evenement
+    ports:
+      - "8083:8083"   
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/EvenementTest?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/      
+      
+      
+    image: "evenementms"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql 
+
+  
+  Reclamation:
+    container_name: reclamation
+    build: .\Reclamation
+    ports:
+      - "8085:8085"   
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/ReclamationTest?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/      
+      
+      
+    image: "reclamationms"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql  
+
+
+  Universite:
+    container_name: universite
+    build: .\UniversiteWebDis
+    ports:
+      - "8081:8081"   
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/UniversiteTest?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/      
+      
+      
+    image: "universitems"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql      
+
+
+
+  Departement:
+    container_name: departement
+    build: ./Departement 
+    ports:
+      - "3000:3000"  
+    environment:
+      - MONGODB_URI=mongodb://root:root@mongodb:27017/departement_db
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/ 
+
+    image: "departementms"
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - mongodb    
+
+ 
+  Eureka:
+    container_name: eureka
+    build: .\Eureka
+    hostname: serviceregistry
+    ports:
+      - "8761:8761"   
+    image: "eureka"
+    
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+
+    
+
+  Gateway:
+    container_name: gatewway
+    build: .\API_Gateway_Server
+    hostname: gateway
+    ports:
+      - "8090:8090"   
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+    image: "gateway"
+    restart: always
+    depends_on:
+      - Eureka
+      - db-mysql  
+   
+  
+  db-mysql:
+      image: "mysql:5.6"
+      container_name: db-mysql 
+      environment:
+        - MYSQL_ROOT_PASSWORD=root  #indisponsable pour la conteneurisation
+        #- MYSQL_DATABASE=job
+      ports:
+        - "3306:3306"
+      restart: unless-stopped
+
+
+  mongodb:
+    image: "mongo:latest"
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "27017:27017"
+    restart: unless-stopped  
+
+  
+  

@@ -21,12 +21,12 @@ public class UniversiteController {
 
      IUniversiteService universiteService;
 
-    @GetMapping
+    @GetMapping("")
     public List<Universite> getAllUniversites() {
         return universiteService.getAllUniversites();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/add" , consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Universite> addUniversite(@RequestBody Universite universite) {
         return new ResponseEntity<>(universiteService.addUniversite(universite), HttpStatus.OK);

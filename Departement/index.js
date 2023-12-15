@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const eurekaConfig = require('./eureka-config');
 
 // Créer une instance d'Express
 const app = express();
@@ -11,8 +12,11 @@ app.use('/departement', departementRouter);
 
 
 
+//mongoose.connect('mongodb://root:root@mongodb:27017/departement_db', {
 mongoose.connect('mongodb+srv://user:ESInIsqTcO2QwOUn@cluster0.dwlccnt.mongodb.net/', {
-    useNewUrlParser: true
+
+    useNewUrlParser: true,
+    authSource: "admin"
 }).then(() => {
     console.log("Successfully connected to the database");    
 }).catch(error => {
@@ -31,4 +35,14 @@ app.get('/', (req, res) => {
 
 app.listen(3000, () => {
   console.log(`Server is listening on port ${3000}`);
+});
+
+
+// Enregistrement de l'instance dans Eureka
+eurekaConfig.start((error) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Eureka registration successful');
+  }
 });

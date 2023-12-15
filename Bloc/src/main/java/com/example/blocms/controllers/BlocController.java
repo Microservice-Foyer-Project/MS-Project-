@@ -10,39 +10,40 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/bloc")
 public class BlocController {
 
 
     BlocServiceImpl blocService ;
 
-    @PostMapping("/addbloc")
+    @PostMapping("/add")
     Bloc addBloc(@RequestBody Bloc bloc)
     {
         return blocService.addBloc(bloc);
     }
 
 
-    @GetMapping("/bloc")
+    @GetMapping("")
     List<Bloc> GetAllBloc()
     {
         return blocService.getAllBloc();
     }
 
 
-    @GetMapping("/bloc/{id}")
+    @GetMapping("/{id}")
     Bloc GetBlocById(@PathVariable Long id)
     {
         return blocService.getBloc(id);
     }
 
 
-    @DeleteMapping("/bloc/{id}")
+    @DeleteMapping("/{id}")
     void deleteBloc(@PathVariable Long id )
     {
         blocService.deleteBloc(id);
     }
 
-    @PutMapping("/bloc/update")
+    @PutMapping("/update")
     Bloc updateBloc(@RequestBody Bloc bloc)
     {
         return blocService.updateBloc(bloc);

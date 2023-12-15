@@ -24,11 +24,12 @@ public class ChambreRestAPI {
         return hello;
     }
 
-    @RequestMapping
+    @RequestMapping("")
     public List<Chambre> getListChambre(){
         return chambreService.getAll();
     }
-    @PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_XML_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Chambre> createChambre(@RequestBody Chambre chambre) {
         return new ResponseEntity<>(chambreService.addChambre(chambre), HttpStatus.OK);

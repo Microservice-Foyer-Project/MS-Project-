@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/foyer")
 public class FoyerController {
     impServiceFoyer FoyerserviceImpl;
 
@@ -22,51 +23,51 @@ public class FoyerController {
         this.FoyerserviceImpl = impServiceFoyer;
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/addFoyer")
+    @PostMapping("/add")
     Foyer addFoyer(@RequestBody Foyer foyer)
     {
         return FoyerserviceImpl.addFoyer(foyer);
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/Foyer")
+    @GetMapping("/")
     List<Foyer> GetFoyer()
     {
         return FoyerserviceImpl.getAllFoyer();
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/Foyer/{id}")
+    @GetMapping("/{id}")
     Optional<Foyer> GetFoyerById(@PathVariable Long id)
     {
         return FoyerserviceImpl.getFoyer(id);
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping("/Foyer/update")
+    @PutMapping("/update")
     Foyer updateFoyer(@RequestBody Foyer foyer)
     {
         return FoyerserviceImpl.updateFoyer(foyer);
     }
     @CrossOrigin(origins = "http://localhost:4200")
-    @DeleteMapping("/Foyer/{id}")
+    @DeleteMapping("/{id}")
     void deleteFoyer(@PathVariable Long id )
     {
         FoyerserviceImpl.deleteFoyer(id);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/Foyer/idFoyer/{id}")
+    @GetMapping("/idFoyer/{id}")
     void getFoyerById(@PathVariable Long id )
     {
         FoyerserviceImpl.getFoyerById(id);
     }
 
 
-    @GetMapping("/Foyer/getFoyerParTypeSexe")
+    @GetMapping("/getFoyerParTypeSexe")
     public List<Foyer> getFoyerParTypeSexe()
     {
         return  FoyerserviceImpl.getFoyerParTypeSexe();
 
     }
-    @GetMapping("/Foyer/getFoyerParTypeMixte")
+    @GetMapping("/getFoyerParTypeMixte")
     public List<Foyer> getFoyerParTypeMixte()
     {
         return  FoyerserviceImpl.getFoyerParTypeMixte();

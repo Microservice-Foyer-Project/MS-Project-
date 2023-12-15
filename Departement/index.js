@@ -12,9 +12,7 @@ app.use('/departement', departementRouter);
 
 
 
-//mongoose.connect('mongodb://root:root@mongodb:27017/departement_db', {
-mongoose.connect('mongodb+srv://user:ESInIsqTcO2QwOUn@cluster0.dwlccnt.mongodb.net/', {
-
+mongoose.connect('mongodb://root:root@mongodb:27017/departement_db', {
     useNewUrlParser: true,
     authSource: "admin"
 }).then(() => {

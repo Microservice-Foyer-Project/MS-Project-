@@ -1,3 +1,7 @@
+les versions:
+Angular v15
+Node 18
+SpringBoot v 3.2.0 , java 17
 les routes sur postman:
   Reclamation:
     http://localhost:8090/reclamation/ajout
@@ -25,6 +29,8 @@ les routes sur postman:
    http://localhost:3000/departement/all
    http://localhost:3000/departement/id
    http://localhost:3000/departement/id
+
+
    
 
 
